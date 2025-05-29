@@ -3,7 +3,6 @@ import zmq
 import subprocess
 
 IP_SERVIDOR = "10.43.103.220"  # IP del servidor principal
-IP_REPLICA = "10.43.103.169"      # IP de esta máquina (donde se lanzará la réplica)
 PUERTO = 5555
 TIEMPO_CHECK = 2  # segundos
 INTENTOS_FALLO = 3
@@ -11,30 +10,25 @@ INTENTOS_FALLO = 3
 def servidor_esta_activo():
     contexto = zmq.Context()
     socket = contexto.socket(zmq.DEALER)
-
-    identidad = b"health_checker"
-    socket.setsockopt(zmq.IDENTITY, identidad)
-    socket.connect(f"tcp://{IP_SERVIDOR}:{PUERTO}")
-
-    poller = zmq.Poller()
-    poller.register(socket, zmq.POLLIN)
+    socket.setsockopt(zmq.IDENTITY, b"health_checker")
+    socket.setsockopt(zmq.LINGER, 0)
 
     try:
+        socket.connect(f"tcp://{IP_SERVIDOR}:{PUERTO}")
         socket.send(b"ping")
-        print("[HealthCheck] Ping enviado...")
 
-        socks = dict(poller.poll(1500))  # Espera 1.5 segundos
+        poller = zmq.Poller()
+        poller.register(socket, zmq.POLLIN)
+        socks = dict(poller.poll(1500))  # Esperar 1.5 segundos
 
         if socket in socks:
             respuesta = socket.recv()
-            print(f"[HealthCheck] Respuesta recibida: {respuesta}")
             return respuesta == b"pong"
         else:
-            print("[HealthCheck] Timeout: no se recibió pong.")
+            print("[HealthCheck] Timeout esperando respuesta del servidor.")
             return False
-
     except Exception as e:
-        print(f"[HealthCheck] Error al contactar el servidor: {e}")
+        print(f"[HealthCheck] Error al contactar al servidor: {e}")
         return False
     finally:
         socket.close()
@@ -42,14 +36,15 @@ def servidor_esta_activo():
 
 def activar_replicado():
     print("[HealthCheck] Iniciando servidor réplica...")
-    subprocess.Popen(["python3", "Servidor.py"])
+    subprocess.Popen(["python3", "ServidorReplica.py"])
 
 def main():
     print("[HealthCheck] Iniciando monitoreo...")
-
     fallos = 0
+
     while True:
         activo = servidor_esta_activo()
+
         if activo:
             print("[HealthCheck] Servidor OK")
             fallos = 0

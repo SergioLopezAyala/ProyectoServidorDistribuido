@@ -6,22 +6,22 @@ import time
 # Constantes
 MAX_PROGRAMAS = 5
 PUERTO_LOCAL = 6000
-PUERTO_SERVIDOR = 5555
 IP_SERVIDOR_PRINCIPAL = "10.43.103.220"
+PUERTO_SERVIDOR_PRINCIPAL = 5555
 IP_SERVIDOR_REPLICA = "10.43.96.9"
-
+PUERTO_SERVIDOR_REPLICA = 5556
 
 def enviar_a_servidor(solicitud_agrupada, nombre_facultad):
-    def intentar_envio(ip_servidor, etiqueta):
+    def intentar_envio(ip_servidor, puerto, etiqueta):
         contexto = zmq.Context()
         socket = contexto.socket(zmq.DEALER)
         socket.setsockopt(zmq.IDENTITY, nombre_facultad.encode("utf-8"))
-        socket.connect(f"tcp://{ip_servidor}:{PUERTO_SERVIDOR}")
+        socket.connect(f"tcp://{ip_servidor}:{puerto}")
 
         poller = zmq.Poller()
         poller.register(socket, zmq.POLLIN)
 
-        print(f"[Facultad] Enviando solicitud al servidor {etiqueta} ({ip_servidor})...")
+        print(f"[Facultad] Enviando solicitud al servidor {etiqueta} ({ip_servidor}:{puerto})...")
         socket.send(json.dumps(solicitud_agrupada).encode("utf-8"))
 
         socks = dict(poller.poll(5000))  # Esperar hasta 5s
@@ -34,32 +34,27 @@ def enviar_a_servidor(solicitud_agrupada, nombre_facultad):
             return respuesta
         else:
             print(f"[Facultad] Timeout con el servidor {etiqueta}")
+            print("[Facultad] Intentando con servidor de respaldo...")
+            respuesta = intentar_envio(IP_SERVIDOR_REPLICA, PUERTO_SERVIDOR_REPLICA, "réplica")
             socket.close()
             contexto.term()
-            return None
+            return respuesta
 
     # Intentar primero con el servidor principal
-    respuesta = intentar_envio(IP_SERVIDOR_PRINCIPAL, "principal")
-
-    # Si falla, intentar con el servidor réplica
-    if respuesta is None:
-        print("[Facultad] Intentando con servidor de respaldo...")
-        respuesta = intentar_envio(IP_SERVIDOR_REPLICA, "réplica")
-
-    return respuesta
-
+    respuesta = intentar_envio(IP_SERVIDOR_PRINCIPAL, PUERTO_SERVIDOR_PRINCIPAL, "principal")
 def main():
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
         print("Uso: python facultad.py <nombre_facultad>")
         return
 
     nombre_facultad = sys.argv[1]
+    new_port = sys.argv[2]
 
     print(f"[Facultad: {nombre_facultad}] Esperando solicitudes de programas...")
 
     contexto = zmq.Context()
     socket_prog = contexto.socket(zmq.REP)
-    socket_prog.bind(f"tcp://*:{PUERTO_LOCAL}")
+    socket_prog.bind(f"tcp://*:{new_port}")
 
     solicitudes_recibidas = {}
 
@@ -85,12 +80,12 @@ def main():
     respuesta_servidor = enviar_a_servidor(agrupada, nombre_facultad)
 
     if respuesta_servidor is None:
-        print("[Facultad] No se pudo obtener respuesta del servidor.")
+        print("[Facultad] No se pudo obtener respuesta ni del servidor principal ni de la réplica.")
         return
 
     asignaciones = json.loads(respuesta_servidor.decode("utf-8"))
 
-    print(f"[Facultad: {nombre_facultad}] Asignaciones recibidas. Enviando a programas...")
+    print(f"[Facultad: {nombre_facultad}] Asignaciones recibidas. Detalle:")
     for programa, asignacion in asignaciones.items():
         print(f"  Programa: {programa}")
         print(f"    Estado: {asignacion['estado']}")
@@ -108,5 +103,5 @@ def main():
     socket_prog.close()
     contexto.term()
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()

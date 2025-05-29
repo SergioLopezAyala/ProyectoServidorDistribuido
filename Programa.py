@@ -26,7 +26,7 @@ def guardar_respuesta(programa, semestre, solicitud, respuesta):
 
 
 def main():
-    if len(sys.argv) != 6:
+    if len(sys.argv) != 7:
         print("Uso: python program_client.py <programa> <semestre> <n_salas> <n_labs> <ip_facultad>")
         return
 
@@ -35,6 +35,7 @@ def main():
     n_salas = int(sys.argv[3])
     n_labs = int(sys.argv[4])
     ip_facultad = sys.argv[5]
+    new_port = sys.argv[6]
 
     solicitud = {
         "programa": programa,
@@ -45,7 +46,7 @@ def main():
 
     contexto = zmq.Context()
     socket = contexto.socket(zmq.REQ)
-    socket.connect(f"tcp://{ip_facultad}:6000")  # Puerto fijo de la Facultad
+    socket.connect(f"tcp://{ip_facultad}:{new_port}")  # Puerto fijo de la Facultad
 
     print(f"[{programa}] Enviando solicitud a la Facultad...")
     socket.send(json.dumps(solicitud).encode("utf-8"))

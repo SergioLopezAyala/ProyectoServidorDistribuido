@@ -1,0 +1,57 @@
+import time
+import zmq
+import subprocess
+
+IP_SERVIDOR = "10.43.103.220"  # IP del servidor principal
+IP_REPLICA = "10.43.96.9"      # IP de esta máquina (donde se lanzará la réplica)
+PUERTO = 5555
+TIEMPO_CHECK = 2  # segundos
+INTENTOS_FALLO = 3
+
+def servidor_esta_activo():
+    contexto = zmq.Context()
+    socket = contexto.socket(zmq.REQ)
+    socket.setsockopt(zmq.RCVTIMEO, 1000)  # Espera 1 segundo máximo
+    socket.setsockopt(zmq.LINGER, 0)
+
+    try:
+        socket.connect(f"tcp://{IP_SERVIDOR}:{PUERTO}")
+        socket.send_string("ping")
+        respuesta = socket.recv_string()
+        socket.close()
+        contexto.term()
+        return respuesta == "pong"
+    except zmq.error.Again:
+        print("[HealthCheck] Timeout esperando respuesta del servidor.")
+    except Exception as e:
+        print(f"[HealthCheck] Error al contactar el servidor: {e}")
+    finally:
+        socket.close()
+        contexto.term()
+    return False
+
+def activar_replicado():
+    print("[HealthCheck] Iniciando servidor réplica...")
+    subprocess.Popen(["python3", "server.py"])
+
+def main():
+    print("[HealthCheck] Iniciando monitoreo...")
+
+    fallos = 0
+    while True:
+        activo = servidor_esta_activo()
+        if activo:
+            print("[HealthCheck] Servidor OK")
+            fallos = 0
+        else:
+            fallos += 1
+            print(f"[HealthCheck] Falla detectada ({fallos})")
+
+        if fallos >= INTENTOS_FALLO:
+            activar_replicado()
+            break
+
+        time.sleep(TIEMPO_CHECK)
+
+if __name__ == "_main_":
+    main()

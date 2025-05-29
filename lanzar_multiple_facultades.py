@@ -8,26 +8,26 @@ SEMESTRE = "2025-10"
 FACULTAD_BASE_LISTEN_PORT = 7000  # Starting port for faculties to listen for programs
 MAX_PROGRAMS_PER_FACULTY = 5 # Default, can be overridden by faculty's own logic
 
-# Define program templates for variety
+# Define program templates for variety (solo se usará el nombre_base)
 PROGRAM_TEMPLATES = [
-    {"nombre_base": "Sistemas", "salas": 5, "labs": 2},
-    {"nombre_base": "Civil", "salas": 6, "labs": 1},
-    {"nombre_base": "Industrial", "salas": 4, "labs": 2},
-    {"nombre_base": "Electronica", "salas": 5, "labs": 3},
-    {"nombre_base": "Ambiental", "salas": 3, "labs": 2},
-    {"nombre_base": "Mecanica", "salas": 4, "labs": 1},
-    {"nombre_base": "Quimica", "salas": 3, "labs": 3},
-    {"nombre_base": "Arquitectura", "salas": 7, "labs": 1},
-    {"nombre_base": "Diseno", "salas": 3, "labs": 1},
-    {"nombre_base": "Medicina", "salas": 8, "labs": 4},
-    {"nombre_base": "Software", "salas": 5, "labs": 3},
-    {"nombre_base": "Telecom", "salas": 4, "labs": 2},
-    {"nombre_base": "Biomecanica", "salas": 3, "labs": 2},
-    {"nombre_base": "Petroleos", "salas": 2, "labs": 1},
-    {"nombre_base": "Minas", "salas": 3, "labs": 1},
+    {"nombre_base": "Sistemas"},
+    {"nombre_base": "Civil"},
+    {"nombre_base": "Industrial"},
+    {"nombre_base": "Electronica"},
+    {"nombre_base": "Ambiental"},
+    {"nombre_base": "Mecanica"},
+    {"nombre_base": "Quimica"},
+    {"nombre_base": "Arquitectura"},
+    {"nombre_base": "Diseno"},
+    {"nombre_base": "Medicina"},
+    {"nombre_base": "Software"},
+    {"nombre_base": "Telecom"},
+    {"nombre_base": "Biomecanica"},
+    {"nombre_base": "Petroleos"},
+    {"nombre_base": "Minas"},
 ]
 
-def generate_faculty_configs(num_faculties):
+def generate_faculty_configs(num_faculties, salones_por_programa, labs_por_programa):
     faculties = []
     program_template_cycler = itertools.cycle(PROGRAM_TEMPLATES)
     
@@ -36,18 +36,16 @@ def generate_faculty_configs(num_faculties):
         faculty_listen_port = FACULTAD_BASE_LISTEN_PORT + i 
         
         programs_for_faculty = []
-        # Ensure each faculty gets its defined number of programs, 
-        # or MAX_PROGRAMS_PER_FACULTY if not otherwise specified by faculty logic
         num_programs_this_faculty = MAX_PROGRAMS_PER_FACULTY 
 
         for j in range(num_programs_this_faculty):
             template = next(program_template_cycler)
-            # Ensure unique program names, especially if templates repeat for many faculties
             program_name = f"{template['nombre_base']}_P{j+1}_Fac{i+1}" 
+            
             programs_for_faculty.append({
                 "nombre": program_name,
-                "salas": template["salas"],
-                "labs": template["labs"]
+                "salas": salones_por_programa, # Usar valor del argumento
+                "labs": labs_por_programa    # Usar valor del argumento
             })
 
         faculties.append({
@@ -57,12 +55,17 @@ def generate_faculty_configs(num_faculties):
         })
     return faculties
 
-def run_launcher(num_faculties):
-    faculty_configs = generate_faculty_configs(num_faculties)
+def run_launcher(num_faculties, salones_arg, labs_arg):
+    faculty_configs = generate_faculty_configs(num_faculties, salones_arg, labs_arg)
     launched_processes = []
 
-    print(f"[Super-Lanzador] Iniciando {num_faculties} facultades y sus programas...")
+    print(f"[Super-Lanzador] Iniciando {num_faculties} facultades.")
+    print(f"  Cada programa solicitará: {salones_arg} salones y {labs_arg} laboratorios.")
     print("-" * 70)
+    print("IMPORTANTE: Este lanzador REQUIERE que haya modificado Facultad.py y Programa.py")
+    print("para aceptar puertos como argumentos de línea de comandos.")
+    print("Facultad.py: <nombre_facultad> <puerto_escucha_programas>")
+    print("Programa.py: <programa> <semestre> <n_salas> <n_labs> <ip_facultad> <puerto_facultad>")
     print("-" * 70)
 
     # Launch Faculties
@@ -71,7 +74,6 @@ def run_launcher(num_faculties):
         nombre_facultad = fac_config["nombre"]
         puerto_escucha_programas = fac_config["listen_port_for_programs"]
         
-        # Command for Facultad.py: python3 Facultad.py <nombre_facultad> <puerto_escucha_programas>
         comando_facultad = [
             "python3", "Facultad.py",
             nombre_facultad,
@@ -81,7 +83,6 @@ def run_launcher(num_faculties):
         print(f"  Lanzando: {nombre_facultad} (escuchando en puerto {puerto_escucha_programas} para programas)")
         print(f"    Comando: {' '.join(comando_facultad)}")
         try:
-            # Using Popen to run in the background. For Windows, might need creationflags.
             proc = subprocess.Popen(comando_facultad)
             launched_processes.append(proc)
             print(f"    {nombre_facultad} PID: {proc.pid}")
@@ -91,27 +92,26 @@ def run_launcher(num_faculties):
         except Exception as e:
             print(f"    ERROR al lanzar {nombre_facultad}: {e}")
         
-        time.sleep(1.5) # Increased pause for faculty to initialize its listening socket
+        time.sleep(1.5)
 
     # Launch Programs for each Faculty
     print("\n[Super-Lanzador] Lanzando Programas...")
     for fac_config in faculty_configs:
         nombre_facultad = fac_config["nombre"]
-        puerto_conexion_facultad = fac_config["listen_port_for_programs"] # Port where this faculty is listening
+        puerto_conexion_facultad = fac_config["listen_port_for_programs"]
         
         print(f"  Programas para {nombre_facultad} (conectando a localhost:{puerto_conexion_facultad}):")
         for prog_config in fac_config["programas"]:
-            # Command for Programa.py: python3 Programa.py <programa> <semestre> <n_salas> <n_labs> <ip_facultad> <puerto_facultad>
             comando_programa = [
                 "python3", "Programa.py",
                 prog_config["nombre"],
                 SEMESTRE,
-                str(prog_config["salas"]),
-                str(prog_config["labs"]),
-                "localhost",  # Facultad runs on the same machine, programs connect to localhost
+                str(prog_config["salas"]), # Este valor ahora viene del argumento
+                str(prog_config["labs"]),  # Este valor ahora viene del argumento
+                "localhost",
                 str(puerto_conexion_facultad)
             ]
-            print(f"    Lanzando: {prog_config['nombre']}")
+            print(f"    Lanzando: {prog_config['nombre']} (solicitando {prog_config['salas']} salas, {prog_config['labs']} labs)")
             print(f"      Comando: {' '.join(comando_programa)}")
             try:
                 proc = subprocess.Popen(comando_programa)
@@ -122,11 +122,12 @@ def run_launcher(num_faculties):
             except Exception as e:
                 print(f"      ERROR al lanzar {prog_config['nombre']}: {e}")
 
-            time.sleep(0.3) # Small pause between program launches
+            time.sleep(0.3)
 
     print("\n[Super-Lanzador] Todos los procesos han sido lanzados.")
     print(f"Total de procesos lanzados: {len(launched_processes)}")
     print("Los procesos se ejecutan en segundo plano.")
+    print("Deberá detenerlos manualmente.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Lanzador para múltiples facultades y programas.")
@@ -136,6 +137,19 @@ if __name__ == "__main__":
         choices=[5, 7, 10], 
         help="Número de facultades a simular (5, 7, o 10)."
     )
+    parser.add_argument(
+        "salones",
+        type=int,
+        help="Número de salones a solicitar por cada programa."
+    )
+    parser.add_argument(
+        "laboratorios",
+        type=int,
+        help="Número de laboratorios a solicitar por cada programa."
+    )
     args = parser.parse_args()
     
-    run_launcher(args.num_facultades)
+    if args.salones < 0 or args.laboratorios < 0:
+        print("Error: El número de salones y laboratorios no puede ser negativo.")
+    else:
+        run_launcher(args.num_facultades, args.salones, args.laboratorios)

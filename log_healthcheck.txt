@@ -1,0 +1,123 @@
+[2025-05-29 13:13:29] Inicio de monitoreo de estado del servidor principal.
+[2025-05-29 13:13:29] Servidor respondió en 0.0050s | CPU: 24.4% | RAM: 39.4%
+[2025-05-29 13:13:31] Servidor respondió en 0.0030s | CPU: 7.5% | RAM: 39.4%
+[2025-05-29 13:13:33] Servidor respondió en 0.0027s | CPU: 2.5% | RAM: 39.4%
+[2025-05-29 13:13:35] Servidor respondió en 0.0040s | CPU: 25.0% | RAM: 39.5%
+[2025-05-29 13:13:37] Servidor respondió en 0.0029s | CPU: 5.0% | RAM: 39.4%
+[2025-05-29 13:13:39] Servidor respondió en 0.0024s | CPU: 5.0% | RAM: 39.4%
+[2025-05-29 13:13:41] Servidor respondió en 0.0032s | CPU: 4.9% | RAM: 39.4%
+[2025-05-29 13:13:43] Servidor respondió en 0.0028s | CPU: 2.6% | RAM: 39.4%
+[2025-05-29 13:13:46] Servidor respondió en 0.0025s | CPU: 5.0% | RAM: 39.5%
+[2025-05-29 13:13:48] Servidor respondió en 0.0024s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:13:50] Servidor respondió en 0.0032s | CPU: 2.5% | RAM: 39.5%
+[2025-05-29 13:13:52] Servidor respondió en 0.0026s | CPU: 4.9% | RAM: 39.4%
+[2025-05-29 13:13:54] Servidor respondió en 0.0022s | CPU: 2.5% | RAM: 39.4%
+[2025-05-29 13:13:56] Servidor respondió en 0.0028s | CPU: 2.6% | RAM: 39.4%
+[2025-05-29 13:13:58] Servidor respondió en 0.0027s | CPU: 0.0% | RAM: 39.4%
+[2025-05-29 13:14:00] Servidor respondió en 0.0029s | CPU: 12.5% | RAM: 39.4%
+[2025-05-29 13:14:02] Servidor respondió en 0.0020s | CPU: 2.5% | RAM: 39.3%
+[2025-05-29 13:14:05] Servidor respondió en 0.0028s | CPU: 5.3% | RAM: 39.3%
+[2025-05-29 13:14:07] Servidor respondió en 0.0030s | CPU: 2.5% | RAM: 39.3%
+[2025-05-29 13:14:09] Servidor respondió en 0.0025s | CPU: 0.0% | RAM: 39.3%
+[2025-05-29 13:14:11] Servidor respondió en 0.0027s | CPU: 17.1% | RAM: 39.3%
+[2025-05-29 13:14:13] Servidor respondió en 0.0022s | CPU: 0.0% | RAM: 39.3%
+[2025-05-29 13:14:15] Servidor respondió en 0.0031s | CPU: 2.5% | RAM: 39.3%
+[2025-05-29 13:14:17] Servidor respondió en 0.0026s | CPU: 9.8% | RAM: 39.3%
+[2025-05-29 13:14:19] Servidor respondió en 0.0021s | CPU: 0.0% | RAM: 39.3%
+[2025-05-29 13:14:21] Servidor respondió en 0.0026s | CPU: 2.5% | RAM: 39.3%
+[2025-05-29 13:14:24] Servidor respondió en 0.0027s | CPU: 2.4% | RAM: 39.3%
+[2025-05-29 13:14:26] Servidor respondió en 0.0023s | CPU: 7.5% | RAM: 39.3%
+[2025-05-29 13:14:28] Servidor respondió en 0.0028s | CPU: 0.0% | RAM: 39.3%
+[2025-05-29 13:14:30] Servidor respondió en 0.0026s | CPU: 0.0% | RAM: 39.3%
+[2025-05-29 13:14:32] Servidor respondió en 0.0025s | CPU: 2.5% | RAM: 39.3%
+[2025-05-29 13:14:34] Servidor respondió en 0.0030s | CPU: 2.4% | RAM: 39.3%
+[2025-05-29 13:14:36] Servidor respondió en 0.0034s | CPU: 0.0% | RAM: 39.4%
+[2025-05-29 13:14:38] Servidor respondió en 0.0024s | CPU: 0.0% | RAM: 39.4%
+[2025-05-29 13:14:40] Servidor respondió en 0.0042s | CPU: 2.6% | RAM: 39.4%
+[2025-05-29 13:14:43] Servidor respondió en 0.0022s | CPU: 4.9% | RAM: 39.4%
+[2025-05-29 13:14:45] Servidor respondió en 0.0028s | CPU: 25.0% | RAM: 39.4%
+[2025-05-29 13:14:47] Servidor respondió en 0.0022s | CPU: 12.2% | RAM: 39.3%
+[2025-05-29 13:14:49] Servidor respondió en 0.0023s | CPU: 2.6% | RAM: 39.3%
+[2025-05-29 13:14:51] Servidor respondió en 0.0026s | CPU: 0.0% | RAM: 39.3%
+[2025-05-29 13:14:53] Servidor respondió en 0.0025s | CPU: 2.5% | RAM: 39.3%
+[2025-05-29 13:14:55] Servidor respondió en 0.0024s | CPU: 2.5% | RAM: 39.3%
+[2025-05-29 13:14:57] Servidor respondió en 0.0023s | CPU: 5.0% | RAM: 39.3%
+[2025-05-29 13:15:01] Timeout esperando respuesta del servidor.
+[2025-05-29 13:15:01] Falla detectada #1
+[2025-05-29 13:15:04] Timeout esperando respuesta del servidor.
+[2025-05-29 13:15:04] Falla detectada #2
+[2025-05-29 13:15:08] Timeout esperando respuesta del servidor.
+[2025-05-29 13:15:08] Falla detectada #3
+[2025-05-29 13:15:08] Iniciando servidor réplica por fallo del principal.
+[2025-05-29 13:15:41] Inicio de monitoreo de estado del servidor principal.
+[2025-05-29 13:15:43] Timeout esperando respuesta del servidor.
+[2025-05-29 13:15:43] Falla detectada #1
+[2025-05-29 13:15:46] Timeout esperando respuesta del servidor.
+[2025-05-29 13:15:46] Falla detectada #2
+[2025-05-29 13:15:50] Timeout esperando respuesta del servidor.
+[2025-05-29 13:15:50] Falla detectada #3
+[2025-05-29 13:15:50] Iniciando servidor réplica por fallo del principal.
+[2025-05-29 13:17:30] Inicio de monitoreo de estado del servidor principal.
+[2025-05-29 13:17:31] Timeout esperando respuesta del servidor.
+[2025-05-29 13:17:31] Falla detectada #1
+[2025-05-29 13:18:18] Inicio de monitoreo de estado del servidor principal.
+[2025-05-29 13:18:18] Servidor respondió en 0.0023s | CPU: 20.5% | RAM: 39.5%
+[2025-05-29 13:18:20] Servidor respondió en 0.0025s | CPU: 2.6% | RAM: 39.6%
+[2025-05-29 13:18:22] Servidor respondió en 0.0025s | CPU: 0.0% | RAM: 39.6%
+[2025-05-29 13:18:24] Servidor respondió en 0.0029s | CPU: 30.0% | RAM: 39.5%
+[2025-05-29 13:18:26] Servidor respondió en 0.0021s | CPU: 2.5% | RAM: 39.6%
+[2025-05-29 13:18:28] Servidor respondió en 0.0030s | CPU: 24.4% | RAM: 39.6%
+[2025-05-29 13:19:56] Inicio de monitoreo de estado del servidor principal.
+[2025-05-29 13:19:56] Servidor respondió en 0.0022s | CPU: 48.7% | RAM: 39.4%
+[2025-05-29 13:19:58] Servidor respondió en 0.0029s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:20:00] Servidor respondió en 0.0023s | CPU: 4.9% | RAM: 39.5%
+[2025-05-29 13:20:02] Servidor respondió en 0.0026s | CPU: 34.2% | RAM: 39.5%
+[2025-05-29 13:20:05] Servidor respondió en 0.0023s | CPU: 4.9% | RAM: 39.5%
+[2025-05-29 13:20:07] Servidor respondió en 0.0023s | CPU: 4.9% | RAM: 39.5%
+[2025-05-29 13:20:09] Servidor respondió en 0.0030s | CPU: 17.5% | RAM: 39.5%
+[2025-05-29 13:20:11] Servidor respondió en 0.0049s | CPU: 2.5% | RAM: 39.5%
+[2025-05-29 13:20:13] Servidor respondió en 0.0022s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:20:15] Servidor respondió en 0.0028s | CPU: 2.5% | RAM: 39.5%
+[2025-05-29 13:20:17] Servidor respondió en 0.0024s | CPU: 7.7% | RAM: 39.6%
+[2025-05-29 13:20:19] Servidor respondió en 0.0024s | CPU: 2.5% | RAM: 39.6%
+[2025-05-29 13:20:21] Servidor respondió en 0.0037s | CPU: 5.1% | RAM: 39.4%
+[2025-05-29 13:20:24] Servidor respondió en 0.0027s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:20:26] Servidor respondió en 0.0033s | CPU: 2.5% | RAM: 39.5%
+[2025-05-29 13:20:28] Servidor respondió en 0.0024s | CPU: 7.5% | RAM: 39.5%
+[2025-05-29 13:20:30] Servidor respondió en 0.0019s | CPU: 5.0% | RAM: 39.5%
+[2025-05-29 13:20:32] Servidor respondió en 0.0021s | CPU: 4.9% | RAM: 39.5%
+[2025-05-29 13:20:34] Servidor respondió en 0.0025s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:20:36] Servidor respondió en 0.0022s | CPU: 5.0% | RAM: 39.5%
+[2025-05-29 13:20:38] Servidor respondió en 0.0026s | CPU: 15.0% | RAM: 39.5%
+[2025-05-29 13:20:40] Servidor respondió en 0.0022s | CPU: 4.9% | RAM: 39.5%
+[2025-05-29 13:20:43] Servidor respondió en 0.0035s | CPU: 5.0% | RAM: 39.5%
+[2025-05-29 13:20:45] Servidor respondió en 0.0034s | CPU: 5.1% | RAM: 39.6%
+[2025-05-29 13:20:47] Servidor respondió en 0.0028s | CPU: 5.0% | RAM: 39.6%
+[2025-05-29 13:20:49] Servidor respondió en 0.0024s | CPU: 2.6% | RAM: 39.6%
+[2025-05-29 13:20:51] Servidor respondió en 0.0029s | CPU: 2.6% | RAM: 39.6%
+[2025-05-29 13:20:53] Servidor respondió en 0.0020s | CPU: 5.0% | RAM: 39.6%
+[2025-05-29 13:20:55] Servidor respondió en 0.0062s | CPU: 2.6% | RAM: 39.6%
+[2025-05-29 13:20:57] Servidor respondió en 0.0018s | CPU: 5.0% | RAM: 39.6%
+[2025-05-29 13:20:59] Servidor respondió en 0.0030s | CPU: 7.5% | RAM: 39.6%
+[2025-05-29 13:21:02] Servidor respondió en 0.0027s | CPU: 2.5% | RAM: 39.6%
+[2025-05-29 13:21:04] Servidor respondió en 0.0022s | CPU: 2.5% | RAM: 39.5%
+[2025-05-29 13:21:06] Servidor respondió en 0.0017s | CPU: 2.5% | RAM: 39.5%
+[2025-05-29 13:21:08] Servidor respondió en 0.0017s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:21:10] Servidor respondió en 0.0019s | CPU: 5.0% | RAM: 39.5%
+[2025-05-29 13:21:12] Servidor respondió en 0.0029s | CPU: 2.5% | RAM: 39.5%
+[2025-05-29 13:21:14] Servidor respondió en 0.0028s | CPU: 12.5% | RAM: 39.6%
+[2025-05-29 13:21:16] Servidor respondió en 0.0025s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:21:18] Servidor respondió en 0.0034s | CPU: 5.3% | RAM: 39.6%
+[2025-05-29 13:21:20] Servidor respondió en 0.0024s | CPU: 2.5% | RAM: 39.6%
+[2025-05-29 13:21:23] Servidor respondió en 0.0019s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:21:25] Servidor respondió en 0.0025s | CPU: 5.0% | RAM: 39.5%
+[2025-05-29 13:21:27] Servidor respondió en 0.0023s | CPU: 0.0% | RAM: 39.4%
+[2025-05-29 13:21:29] Servidor respondió en 0.0026s | CPU: 32.5% | RAM: 39.5%
+[2025-05-29 13:21:31] Servidor respondió en 0.0018s | CPU: 2.6% | RAM: 39.5%
+[2025-05-29 13:21:33] Servidor respondió en 0.0033s | CPU: 2.6% | RAM: 39.6%
+[2025-05-29 13:21:35] Servidor respondió en 0.0025s | CPU: 34.1% | RAM: 39.6%
+[2025-05-29 13:21:37] Servidor respondió en 0.0025s | CPU: 63.4% | RAM: 39.6%
+[2025-05-29 13:21:39] Servidor respondió en 0.0025s | CPU: 12.8% | RAM: 39.6%
+[2025-05-29 13:21:42] Servidor respondió en 0.0017s | CPU: 41.0% | RAM: 39.6%
+[2025-05-29 13:21:44] Servidor respondió en 0.0031s | CPU: 47.5% | RAM: 39.6%
+[2025-05-29 13:21:46] Servidor respondió en 0.0031s | CPU: 2.5% | RAM: 39.6%

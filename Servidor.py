@@ -2,26 +2,26 @@ import zmq
 import threading
 import json
 import os
+import time
+import psutil
 
-# Puerto fijo
 PUERTO = 5555
 
-# Recursos compartidos
 salones_disponibles = ["A-110114-{:03d}".format(i) for i in range(1, 381)]
 laboratorios_disponibles = ["L-01220-{:03d}".format(i) for i in range(1, 61)]
 lock = threading.Lock()
 
-LOG_PATH = "log_asignaciones.json"
+LOG_ASIGNACIONES = "log_asignaciones.json"
+LOG_METRICAS = "log_metricas_servidor.txt"
 
-# Inicializar log si no existe
-if not os.path.exists(LOG_PATH):
-    with open(LOG_PATH, "w", encoding="utf-8") as f:
+if not os.path.exists(LOG_ASIGNACIONES):
+    with open(LOG_ASIGNACIONES, "w", encoding="utf-8") as f:
         json.dump([], f, indent=4)
 
 def guardar_log(entrada):
     try:
-        if os.path.exists(LOG_PATH):
-            with open(LOG_PATH, "r", encoding="utf-8") as f:
+        if os.path.exists(LOG_ASIGNACIONES):
+            with open(LOG_ASIGNACIONES, "r", encoding="utf-8") as f:
                 try:
                     data = json.load(f)
                 except json.JSONDecodeError:
@@ -29,14 +29,19 @@ def guardar_log(entrada):
                     data = []
         else:
             data = []
-        
+
         data.append(entrada)
 
-        with open(LOG_PATH, "w", encoding="utf-8") as f:
+        with open(LOG_ASIGNACIONES, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
 
     except Exception as e:
         print(f"[Servidor] Error al guardar log: {e}")
+
+def guardar_metricas(facultad, duracion, uso_cpu, uso_memoria):
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    with open(LOG_METRICAS, "a") as f:
+        f.write(f"[{timestamp}] Facultad: {facultad} | Latencia: {duracion:.4f}s | CPU: {uso_cpu}% | RAM: {uso_memoria}%\n")
 
 def procesar_programa(programa):
     nombre = programa["programa"]
@@ -73,8 +78,9 @@ def procesar_programa(programa):
 
 def atender_solicitud(socket, identidad, mensaje_json):
     try:
-        solicitud = json.loads(mensaje_json.decode("utf-8"))
+        inicio = time.time()
 
+        solicitud = json.loads(mensaje_json.decode("utf-8"))
         facultad = solicitud.get("facultad")
         semestre = solicitud.get("semestre")
         programas = solicitud.get("programas")
@@ -106,6 +112,11 @@ def atender_solicitud(socket, identidad, mensaje_json):
         }
         guardar_log(entrada_log)
 
+        fin = time.time()
+        uso_cpu = psutil.cpu_percent(interval=0.1)
+        uso_mem = psutil.virtual_memory().percent
+        guardar_metricas(facultad, fin - inicio, uso_cpu, uso_mem)
+
         respuesta = json.dumps(resultado).encode("utf-8")
         print(f"[Servidor] Enviando respuesta a {facultad} con identidad {identidad}")
         socket.send_multipart([identidad, respuesta])
@@ -127,9 +138,9 @@ def main():
     while True:
         partes = socket.recv_multipart()
         if len(partes) == 3:
-            identidad, _, mensaje = partes  # REQ
+            identidad, _, mensaje = partes
         elif len(partes) == 2:
-            identidad, mensaje = partes     # DEALER
+            identidad, mensaje = partes
         else:
             print(f"[Servidor] Error: mensaje con {len(partes)} partes")
             continue

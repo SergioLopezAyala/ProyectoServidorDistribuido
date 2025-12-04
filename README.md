@@ -60,13 +60,11 @@ El sistema está compuesto por:
 ## Requisitos
 
 - Lenguaje / runtime:  
-  - Ejemplo: `Java 17`, `Node.js >= 18`, `Python 3.11`, etc.
+  - `Python 3.11`
 - Gestor de paquetes:  
-  - Ejemplo: Maven / npm / pip.
+  - pip.
 - Base de datos o almacenamiento:  
-  - Ejemplo: PostgreSQL / Redis / MongoDB / sistema de archivos.
+  - MongoDB / sistema de archivos.
 - Opcional: Docker / Docker Compose para despliegue.
-
-> Completa esta sección con las versiones reales de tu proyecto.
-
+  
 ---
